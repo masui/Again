@@ -19,7 +19,7 @@
   <li>単純操作を繰り返す例と、Search&amp;Replaceを繰り返す例です</li>
 </ul>
 
-<a href="https://s3-ap-northeast-1.amazonaws.com/masui.org/8/5/85a450002fe3d72f26378b84a9dce40d.mp4">音声入り解説</a>
+<a href="https://s3-ap-northeast-1.amazonaws.com/masui.org/8/5/85a450002fe3d72f26378b84a9dce40d.mp4">音声入り解説動画</a>
 <br>
 <img src=again.gif>
 
