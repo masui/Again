@@ -7,12 +7,12 @@
 ;; (global-set-key *again-key* 'exec-again)
 ;;
 
-(defvar *last-macro* "" "繰り返し文字列")
+(defvar *again-macro* "" "繰り返し文字列")
 (defvar *old-history* "" "ちょっと前のrecent-keys")
 (defvar *new-history* "" "最新のrecent-keys")
 
 (defun clear-kbd-macro ()
-  (setq *last-macro* "")
+  (setq *again-macro* "")
   (setq *old-history* (concat (recent-keys)))
   )
 
@@ -49,14 +49,14 @@
   (let ((recent (concat (recent-keys))))
     (if (not (string= (substring recent -2) (concat *again-key* *again-key*))) ; 連打のときは何もしない
 	(progn
-	  (if (not (string= *last-macro* "")) ; 新規作成じゃない場合
+	  (if (not (string= *again-macro* "")) ; 新規作成じゃない場合
 	    (setq *old-history* *new-history*)
 	    )
-	  (setq *last-macro* (chomp (get-postfix *old-history* recent)))
+	  (setq *again-macro* (chomp (get-postfix *old-history* recent)))
 	  )
       )
     (setq *new-history* recent)
-    (execute-kbd-macro *last-macro*)
+    (execute-kbd-macro *again-macro*)
     )
   )
 
@@ -67,36 +67,36 @@
 ;; キー操作       123456789*            時間待ちしたところ
 ;; *old-history*  123456789             時間待ちで設定
 ;; *new-history*       
-;; *last-macro*            
+;; *again-macro*            
 ;; 
 ;; キー操作       123456789*abcL
 ;; *old-history*  123456789             時間待ちで設定されたまま
 ;; *new-history*       6789 abcL        Lで設定
-;; *last-macro*             abc         引算計算 + 実行
+;; *again-macro*            abc         引算計算 + 実行
 ;; 
 ;; キー操作       123456789*abcLL
 ;; *old-history*  123456789
 ;; *new-history*        789 abcLL
-;; *last-macro*             abc         LLなので*last-macro*を実行
+;; *again-macro*            abc         LLなので*again-macro*を実行
 ;; 
 ;; キー操作       123456789*abcLLL
 ;; *old-history*  123456789
 ;; *new-history*         89 abcLLL
-;; *last-macro*             abc         LLなので*last-macro*を実行
+;; *again-macro*            abc         LLなので*again-macro*を実行
 ;; 
 ;; キー操作       123456789*abcLLLd
 ;; *old-history*  123456789
 ;; *new-history*         89 abcLLL      変化せず
-;; *last-macro*             abc         実行せず / 実行しない
+;; *again-macro*            abc         実行せず / 実行しない
 ;; 
 ;; キー操作       123456789*abcLLLde
 ;; *old-history*  123456789             変化せず
 ;; *new-history*         89 abcLLL      変化せず
-;; *last-macro*             abc         変化せず / 実行しない
+;; *again-macro*            abc         変化せず / 実行しない
 ;; 
 ;; キー操作       123456789*abcLLLdeL
 ;; *old-history*         89 abcLLL      前の*new-history*をコピー
 ;; *new-history*            abcLLLdeL
-;; *last-macro*                   de    引算+実行
+;; *again-macro*                  de    引算+実行
 
 
