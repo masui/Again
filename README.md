@@ -28,9 +28,9 @@
 <h2>原理</h2>
 
 <ul>
-  <li>しばらくユーザ操作が無かったとき、その時点でのキー操作履歴を<code>*old-recent*</code>という変数に格納します</li>
-  <li>ユーザが何かを操作してから<code>*again-key*</code>を押すと、そのときの操作履歴を<code>*new-recent*</code>という変数に格納します</li>
-  <li><code>*new-recent*</code>と<code>*old-recent*</code>の差分が新しい操作だと考えられるので、これをキーボードマクロとして登録して実行します</li>
+  <li>しばらくユーザ操作が無かったとき、その時点でのキー操作履歴を<code>*old-history*</code>という変数に格納します</li>
+  <li>ユーザが何かを操作してから<code>*again-key*</code>を押すと、そのときの操作履歴を<code>*new-history*</code>という変数に格納します</li>
+  <li><code>*new-history*</code>と<code>*old-history*</code>の差分が新しい操作だと考えられるので、これをキーボードマクロとして登録して実行します</li>
   <li>再度<code>*again-key*</code>が押されたときは、以前登録したマクロを再実行します</li>
   <li></li>
   <li></li>
