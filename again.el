@@ -20,7 +20,7 @@
 
 (defvar *again-macro* [] "繰り返し文字列")
 (defvar *old-history* [] "ちょっと前のrecent-keys")
-(defvar *new-history* []  "最新のrecent-keys")
+(defvar *new-history* [] "最新のrecent-keys")
 
 (defun clear-kbd-macro ()
   (setq *again-macro* [])
@@ -48,7 +48,6 @@
     res
     )
   )
-
 
 (defun chomp (s) ; 文字列の最後の文字を除く
   (let ((len (length s)))
