@@ -1,4 +1,11 @@
-(provide 'again)
+;;
+;; again.el - Emacs上の操作を再実行するシステム
+;;
+;;  増井俊之
+;;  masui@masui.org
+;;  2022/7/12
+;;  https://github.com/masui/Again
+;;
 
 ;;
 ;; ~/.emacsで以下を設定
@@ -6,6 +13,8 @@
 ;; (defconst *again-key* "\C-l" "再実行キー")
 ;; (global-set-key *again-key* 'exec-again)
 ;;
+
+(provide 'again)
 
 (defvar *again-macro* "" "繰り返し文字列")
 (defvar *old-history* "" "ちょっと前のrecent-keys")
