@@ -14,15 +14,17 @@
 ;; (global-set-key *again-key* 'exec-again)
 ;;
 
+;;  M-x toggle-debug-on-error
+
 (provide 'again)
 
-(defvar *again-macro* "" "繰り返し文字列")
-(defvar *old-history* "" "ちょっと前のrecent-keys")
-(defvar *new-history* "" "最新のrecent-keys")
+(defvar *again-macro* [] "繰り返し文字列")
+(defvar *old-history* [] "ちょっと前のrecent-keys")
+(defvar *new-history* []  "最新のrecent-keys")
 
 (defun clear-kbd-macro ()
-  (setq *again-macro* "")
-  (setq *old-history* (concat (recent-keys)))
+  (setq *again-macro* [])
+  (setq *old-history* (recent-keys))
   )
 
 (run-with-idle-timer 1 t 'clear-kbd-macro)
@@ -33,12 +35,12 @@
 (defun get-postfix (s1 s2)
   (let (
 	(len1 (length s1)) (len2 (length s2))
-	(found nil) (i 0) (res "")
+	(found nil) (i 0) (res [])
 	)
     (while (and (< i len2) (not found))
       (let* ((s (substring s2 0 (- len2 i)))
 	     (p (substring s1 (- (min len1 (length s))))))
-	(setq found (string= s p))
+	(setq found (equal s p))
 	(if found (setq res (substring s2 (- i))))
 	)
       (setq i (1+ i))
@@ -47,18 +49,21 @@
     )
   )
 
+
 (defun chomp (s) ; 文字列の最後の文字を除く
   (let ((len (length s)))
-    (if (= len 0) ""  (substring s 0 (1- len)))
+    (if (= len 0) []  (substring s 0 (1- len)))
     )
   )
 
 (defun exec-again () ;;; *again-key* で呼ばれる
   (interactive)
-  (let ((recent (concat (recent-keys))))
-    (if (not (string= (substring recent -2) (concat *again-key* *again-key*))) ; 連打のときは何もしない
+  (let* ((recent (recent-keys)) (len (length recent)))
+    ;;(if (not (string= (substring recent -2) (concat *again-key* *again-key*))) ; 連打のときは何もしない
+    (if (not (and (= (aref recent (- len 1)) (aref *again-key* 0))
+		  (= (aref recent (- len 2)) (aref *again-key* 0))))
 	(progn
-	  (if (not (string= *again-macro* "")) ; 新規作成じゃない場合
+	  (if (not (equal *again-macro* [])) ; 新規作成じゃない場合
 	    (setq *old-history* *new-history*)
 	    )
 	  (setq *again-macro* (chomp (get-postfix *old-history* recent)))
@@ -107,5 +112,3 @@
 ;; *old-history*         89 abcLLL      前の*new-history*をコピー
 ;; *new-history*            abcLLLdeL
 ;; *again-macro*                  de    引算+実行
-
-
