@@ -1,6 +1,11 @@
 (provide 'again)
 
-(defconst *again-key* "\C-l" "繰返し指定キー")
+;;
+;; ~/.emacsで以下を設定
+;; (require 'again)
+;; (defconst *again-key* "\C-l" "再実行指定キー")
+;; (global-set-key *again-key* 'exec-again)
+;;
 
 (defvar *last-macro* "" "繰り返し文字列")
 (defvar *old-recent* "" "ちょっと前のrecent-keys")
@@ -54,8 +59,6 @@
     (execute-kbd-macro *last-macro*)
     )
   )
-
-(global-set-key *again-key* 'exec-again)
 
 ;;
 ;; exec-again の動作
