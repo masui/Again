@@ -19,7 +19,6 @@
   <li>単純操作を繰り返す例と、Search&amp;Replaceを繰り返す例です</li>
 </ul>
 
-
 <img src=again.gif>
 
 
