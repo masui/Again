@@ -3,7 +3,7 @@
 ;;
 ;; ~/.emacsで以下を設定
 ;; (require 'again)
-;; (defconst *again-key* "\C-l" "再実行指定キー")
+;; (defconst *again-key* "\C-l" "再実行キー")
 ;; (global-set-key *again-key* 'exec-again)
 ;;
 

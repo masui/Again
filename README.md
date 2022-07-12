@@ -30,7 +30,7 @@
   <li>これはCtrl-Lを再実行キーに指定した例です</li>
   <pre>
    (require 'again)
-   (defconst *again-key* "\C-l" "再実行指定キー") ;; Ctrl-Lを再実行キーにする場合
+   (defconst *again-key* "\C-l" "再実行キー") ;; Ctrl-Lを再実行キーにする場合
    (global-set-key *again-key* 'exec-again)  </pre>
 </ul>
 
@@ -42,7 +42,3 @@
   <li><code>*new-history*</code>と<code>*old-history*</code>の差分が新しい操作だと考えられるので、これをキーボードマクロとして登録して実行します</li>
   <li>再度<code>*again-key*</code>が押されたときは、以前登録したマクロを再実行します</li>
 </ul>
-
-
-
-
