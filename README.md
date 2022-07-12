@@ -15,6 +15,11 @@
 
 <h2>利用例</h2>
 
+<ul>
+  <li>単純操作の繰り返しとSearch&amp;Replaceの例です</li>
+</ul>
+
+
 <img src=again.gif>
 
 
