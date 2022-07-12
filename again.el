@@ -39,7 +39,7 @@
     )
   )
 
-(defun exec-macro () ;;; *again-key* で呼ばれる
+(defun exec-again () ;;; *again-key* で呼ばれる
   (interactive)
   (let ((recent (concat (recent-keys))))
     (if (not (string= (substring recent -2) (concat *again-key* *again-key*))) ; 連打のときは何もしない
@@ -55,10 +55,11 @@
     )
   )
 
-(global-set-key *again-key* 'exec-macro)
+(global-set-key *again-key* 'exec-again)
 
 ;;
-;; exec-macro の動作
+;; exec-again の動作
+;; * は時間待ち
 ;;
 ;; キー操作      123456789*            時間待ちしたところ
 ;; *old-recent*  123456789             時間待ちで設定
@@ -91,7 +92,8 @@
 ;; *last-macro*            abc         変化せず / 実行しない
 ;; 
 ;; キー操作      123456789*abcLLLdeL
-;; *old-recent*         89 abcLLL      これをどう作る? *new-recent*をコピー?
+;; *old-recent*         89 abcLLL      前の*new-recent*をコピー
 ;; *new-recent*            abcLLLdeL
-;; *last-macro*                  de    引算+実行したい
+;; *last-macro*                  de    引算+実行
+
 
