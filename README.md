@@ -2,7 +2,7 @@
 
 <ul>
   <li><code>again.el</code>はEmacs上のさまざまな操作を再実行するシステムです</li>
-  <li><a href="https://scrapbox.io/masui/Dynamic_Macro">Dynamic Macro</a>と組み合わせて使います</li>
+  <li><a href="https://scrapbox.io/masui/Dynamic_Macro">Dynamic Macro</a>(<code>ndmacro.el</code>)と組み合わせて使います</li>
 </ul>
 
 <h2>使い方</h2>
