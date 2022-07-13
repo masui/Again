@@ -18,9 +18,10 @@
 
 (provide 'again)
 
-(defvar *again-macro* [] "繰り返し文字列")
-(defvar *old-history* [] "ちょっと前のrecent-keys")
-(defvar *new-history* [] "最新のrecent-keys")
+(defvar *again-macro*    []  "繰り返し文字列")
+(defvar *old-history*    []  "ちょっと前のrecent-keys")
+(defvar *recent-history* []  "最新のrecent-keys")
+(defvar *dmacro-running* nil "dmacro実行中")
 
 (defun clear-kbd-macro ()
   (setq *again-macro* [])
@@ -55,36 +56,34 @@
     )
   )
 
-(defvar *dmacro-running* nil "dmacro実行中")
 
 (defun exec-again () ;;; *again-key* で呼ばれる
   (interactive)
   (let* ((recent (recent-keys))
 	 (len (length recent))
-	 (renda (and (= (aref recent (- len 1)) (aref *again-key* 0))
-		     (= (aref recent (- len 2)) (aref *again-key* 0))))
+	 (again-key-repeated ;; *again-key* が連打されたかどうか
+	  (and (= (aref recent (- len 1)) (aref *again-key* 0))
+	       (= (aref recent (- len 2)) (aref *again-key* 0))))
 	 )
     ;;
     ;; 繰り返しがあるか、dmacro実行中に連打なら (ndmacro) を呼ぶ
     ;;
-    ;;;(if (or (and (not *dmacro-running*) (> (key-repeated) 1)) (and *dmacro-running* renda))
-    ;;(if (or (and *dmacro-running* renda) (and (= (length *again-macro*) 0) (> (key-repeated) 1)))
-    (if (or (and *dmacro-running* renda) (and (> (key-repeated) 1) (not renda)))
-    ;;(if nil
+    (if (or (and *dmacro-running* again-key-repeated)
+	    (and (> (key-repeated) 1) (not again-key-repeated)))
 	(progn
 	  (ndmacro)
 	  (setq *dmacro-running* t)
 	  )
       (setq *dmacro-running* nil)
-      (if (not renda)
+      (if (not again-key-repeated)
 	  (progn
 	    (if (not (equal *again-macro* [])) ; 新規作成じゃない場合
-		(setq *old-history* *new-history*)
+		(setq *old-history* *recent-history*)
 	      )
 	    (setq *again-macro* (chomp (get-postfix *old-history* recent)))
 	    )
 	)
-      (setq *new-history* recent)
+      (setq *recent-history* recent)
       ;;(setq xxx *again-macro*)
       (execute-kbd-macro *again-macro*)
       )
@@ -92,42 +91,42 @@
   )
 
 ;;
-;; exec-again の動l
+;; exec-again の動作
 ;; * は時間待ち
 ;;
-;; キー操作       123456789*            時間待ちしたところ
-;; *old-history*  123456789             時間待ちで設定
-;; *new-history*       
+;; キー操作         123456789*            時間待ちしたところ
+;; *old-history*    123456789             時間待ちで設定
+;; *recent-history*       
 ;; *again-macro*            
 ;; 
-;; キー操作       123456789*abcL
-;; *old-history*  123456789             時間待ちで設定されたまま
-;; *new-history*       6789 abcL        Lで設定
-;; *again-macro*            abc         引算計算 + 実行
+;; キー操作         123456789*abcL
+;; *old-history*    123456789             時間待ちで設定されたまま
+;; *recent-history*      6789 abcL        Lで設定
+;; *again-macro*              abc         引算計算 + 実行
 ;; 
-;; キー操作       123456789*abcLL
-;; *old-history*  123456789
-;; *new-history*        789 abcLL
-;; *again-macro*            abc         LLなので*again-macro*を実行
+;; キー操作         123456789*abcLL
+;; *old-history*    123456789
+;; *recent-history*       789 abcLL
+;; *again-macro*              abc         LLなので*again-macro*を実行
 ;; 
-;; キー操作       123456789*abcLLL
-;; *old-history*  123456789
-;; *new-history*         89 abcLLL
-;; *again-macro*            abc         LLなので*again-macro*を実行
+;; キー操作         123456789*abcLLL
+;; *old-history*    123456789
+;; *recent-history*        89 abcLLL
+;; *again-macro*              abc         LLなので*again-macro*を実行
 ;; 
 ;; キー操作       123456789*abcLLLd
 ;; *old-history*  123456789
-;; *new-history*         89 abcLLL      変化せず
+;; *recent-history*      89 abcLLL      変化せず
 ;; *again-macro*            abc         実行せず / 実行しない
 ;; 
 ;; キー操作       123456789*abcLLLde
 ;; *old-history*  123456789             変化せず
-;; *new-history*         89 abcLLL      変化せず
+;; *recent-history*      89 abcLLL      変化せず
 ;; *again-macro*            abc         変化せず / 実行しない
 ;; 
 ;; キー操作       123456789*abcLLLdeL
-;; *old-history*         89 abcLLL      前の*new-history*をコピー
-;; *new-history*            abcLLLdeL
+;; *old-history*         89 abcLLL      前の*recent-history*をコピー
+;; *recent-history*         abcLLLdeL
 ;; *again-macro*                  de    引算+実行
 
 
@@ -171,3 +170,6 @@
   )
 
 ;; (defconst *dmacro-key* "\C-l" "繰返し指定キー")
+
+
+
