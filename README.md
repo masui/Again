@@ -30,6 +30,7 @@
 <ul>
   <li><code>again.el</code>と<code>ndmacro.el</code>をEmacsのライブラリのパスに置き、
     以下を<code>~/.emacs</code>に記述します</li>
+  <li><code>ndmacro.el</code>は<a href="https://github.com/snj14/ndmacro.el">snj14さんのGitHub</a>からコピーしてきたものです</li>
   <li>これはCtrl-Tを再実行キーに指定した例です</li>
   <pre>
    (require 'ndmacro)
