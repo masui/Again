@@ -170,4 +170,3 @@
 ;; (defconst *dmacro-key* "\C-l" "繰返し指定キー")
 
 
-
