@@ -146,6 +146,15 @@
 	(i 1)
 	(replen 0)
 	)
+    (let ((i 0))
+      (while (< i (length a))
+	(if (and (>= (aref a i) 48) (<= (aref a i) 57)) ;; 数字はみな同じと扱う (ndmacroの連番機能のため)
+	    (aset a i 48)
+	  )
+	(incf i)
+	)
+      )
+    (setq xxx a)
     (while (<= (* 2 i) alen)
       (let ((matched t)
 	    (j 0)
@@ -163,8 +172,8 @@
     )
   )
 
-;; (defconst *dmacro-key* "\C-l" "繰返し指定キー")
 
+;; (defconst *dmacro-key* "\C-l" "繰返し指定キー")
 
 
 
