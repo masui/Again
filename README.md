@@ -8,7 +8,8 @@
 <h2>使い方</h2>
 
 <ul>
-  <li>Emacs上で<img src="again.png" style="height:20px; margin:0px 20px -30px 20px;padding:10px;">を押すと、最近実行したキー操作が再実行されます</li>
+  <!-- <li>Emacs上で<img src="again.png" style="height:20px; margin:0px 20px -30px 20px;padding:10px;">を押すと、最近実行したキー操作が再実行されます</li> -->
+  <li>Emacs上で<span style="margin:0px 20px -30px 20px;><img src="again.png" height=20></span>を押すと、最近実行したキー操作が再実行されます</li> -->
   <li>「最近実行されたキー操作」とは、1秒間キー操作が無かった時点から現在までのキー操作です</li>
   <li>1秒間キー操作をしなかった後で「abc」と入力し、すかさず <img src="again.png" height=20> を押すと再度「abc」が入力されます</li>
   <li>同じ操作を二度繰り返した後で <img src="again.png" height=20> を押すと、繰り返されたキー操作が再実行されます</li>
