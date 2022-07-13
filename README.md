@@ -10,8 +10,8 @@
 <ul>
   <li>Emacs上で <img src="again.png" height=20> を押すと、最近実行したキー操作が再実行されます</li>
   <li>「最近実行されたキー操作」とは、1秒間キー操作が無かった時点から現在までのキー操作です</li>
-  <li>1秒間キー操作をしなかった後で「abc」と入力し、すかさず「再実行キー」を押すと再度「abc」が入力されます</li>
-  <li>同じ操作を二度繰り返した後で「再実行キー」を押すと、繰り返されたキー操作が再実行されます</li>
+  <li>1秒間キー操作をしなかった後で「abc」と入力し、すかさず <img src="again.png" height=20> を押すと再度「abc」が入力されます</li>
+  <li>同じ操作を二度繰り返した後で <img src="again.png" height=20> を押すと、繰り返されたキー操作が再実行されます</li>
 </ul>
 
 <h2>利用例</h2>
@@ -30,7 +30,7 @@
 <ul>
   <li><code>again.el</code>と<code>ndmacro.el</code>をEmacsのライブラリのパスに置き、
     以下を<code>~/.emacs</code>に記述します</li>
-  <li><code>ndmacro.el</code>は<a href="https://github.com/snj14/ndmacro.el">snj14さんのGitHub</a>からコピーしてきたものです</li>
+  <li><code>ndmacro.el</code>は<a href="https://github.com/snj14/ndmacro.el">snj14さんのGitHub</a>のものです</li>
   <li>これはCtrl-Tを再実行キーに指定した例です</li>
   <pre>
    (require 'ndmacro)
