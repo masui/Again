@@ -28,7 +28,7 @@
   (setq *old-history* (recent-keys))
   )
 
-(run-with-idle-timer 1 t 'clear-kbd-macro)
+(run-with-idle-timer 1.2 t 'clear-kbd-macro)
 
 ;;
 ;; "xyzabcdefg" と "abcdefghij" から "hij" を得る
@@ -171,9 +171,6 @@
     replen
     )
   )
-
-
-;; (defconst *dmacro-key* "\C-l" "繰返し指定キー")
 
 
 
