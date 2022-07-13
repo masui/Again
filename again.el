@@ -1,8 +1,9 @@
 ;;
 ;; again.el - Emacs上の操作を再実行するシステム
+;; Dynamic Macro (ndmacro.el) と併用して使う
 ;;
 ;;  増井俊之
-;;  masui@masui.org
+;;  masui@pitecan.com
 ;;  2022/7/13
 ;;  https://github.com/masui/Again
 ;;
@@ -154,7 +155,6 @@
 	(incf i)
 	)
       )
-    (setq xxx a)
     (while (<= (* 2 i) alen)
       (let ((matched t)
 	    (j 0)
