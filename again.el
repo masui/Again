@@ -28,7 +28,21 @@
   (setq *old-history* (recent-keys))
   )
 
-(run-with-idle-timer 1.2 t 'clear-kbd-macro)
+;;
+;; 再実行シーケンスをリセットするための待ち時間
+;;
+(run-with-idle-timer 3 t 'clear-kbd-macro)
+
+;;
+;; Ctrl-Lを入力するとagain動作をリセットするようにする
+;; (Ctr-Lを入力してから*again-key*を入力するまでの操作が繰り返し実行の対象になる)
+;;
+(defun again-reset ()
+  (interactive)
+  (recenter-top-bottom)
+  (clear-kbd-macro)
+  )
+(global-set-key "\C-l" 'again-reset)
 
 ;;
 ;; "xyzabcdefg" と "abcdefghij" から "hij" を得る
