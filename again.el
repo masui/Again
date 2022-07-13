@@ -68,7 +68,9 @@
     ;; 繰り返しがあるか、dmacro実行中に連打なら (ndmacro) を呼ぶ
     ;;
     ;;;(if (or (and (not *dmacro-running*) (> (key-repeated) 1)) (and *dmacro-running* renda))
-    (if (or (> (key-repeated) 1) (and *dmacro-running* renda))
+    ;;(if (or (and *dmacro-running* renda) (and (= (length *again-macro*) 0) (> (key-repeated) 1)))
+    (if (or (and *dmacro-running* renda) (and (> (key-repeated) 1) (not renda)))
+    ;;(if nil
 	(progn
 	  (ndmacro)
 	  (setq *dmacro-running* t)
@@ -83,6 +85,7 @@
 	    )
 	)
       (setq *new-history* recent)
+      ;;(setq xxx *again-macro*)
       (execute-kbd-macro *again-macro*)
       )
     )
@@ -168,5 +171,3 @@
   )
 
 ;; (defconst *dmacro-key* "\C-l" "繰返し指定キー")
-
-
