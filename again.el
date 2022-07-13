@@ -4,7 +4,7 @@
 ;;
 ;;  増井俊之
 ;;  masui@pitecan.com
-;;  2022/7/13
+;;  2022/7/14
 ;;  https://github.com/masui/Again
 ;;
 
@@ -31,7 +31,7 @@
 ;;
 ;; 再実行シーケンスをリセットするための待ち時間
 ;;
-(run-with-idle-timer 3 t 'clear-kbd-macro)
+(run-with-idle-timer 2 t 'clear-kbd-macro)
 
 ;;
 ;; Ctrl-Lを入力するとagain動作をリセットするようにする
