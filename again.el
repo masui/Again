@@ -55,26 +55,41 @@
     )
   )
 
+(defvar *dmacro-running* nil "dmacro実行中")
+
 (defun exec-again () ;;; *again-key* で呼ばれる
   (interactive)
-  (let* ((recent (recent-keys)) (len (length recent)))
-    ;;(if (not (string= (substring recent -2) (concat *again-key* *again-key*))) ; 連打のときは何もしない
-    (if (not (and (= (aref recent (- len 1)) (aref *again-key* 0))
-		  (= (aref recent (- len 2)) (aref *again-key* 0))))
+  (let* ((recent (recent-keys))
+	 (len (length recent))
+	 (renda (and (= (aref recent (- len 1)) (aref *again-key* 0))
+		     (= (aref recent (- len 2)) (aref *again-key* 0))))
+	 )
+    ;;
+    ;; 繰り返しがあるか、dmacro実行中に連打なら (ndmacro) を呼ぶ
+    ;;
+    ;;;(if (or (and (not *dmacro-running*) (> (key-repeated) 1)) (and *dmacro-running* renda))
+    (if (or (> (key-repeated) 1) (and *dmacro-running* renda))
 	(progn
-	  (if (not (equal *again-macro* [])) ; 新規作成じゃない場合
-	    (setq *old-history* *new-history*)
-	    )
-	  (setq *again-macro* (chomp (get-postfix *old-history* recent)))
+	  (ndmacro)
+	  (setq *dmacro-running* t)
 	  )
+      (setq *dmacro-running* nil)
+      (if (not renda)
+	  (progn
+	    (if (not (equal *again-macro* [])) ; 新規作成じゃない場合
+		(setq *old-history* *new-history*)
+	      )
+	    (setq *again-macro* (chomp (get-postfix *old-history* recent)))
+	    )
+	)
+      (setq *new-history* recent)
+      (execute-kbd-macro *again-macro*)
       )
-    (setq *new-history* recent)
-    (execute-kbd-macro *again-macro*)
     )
   )
 
 ;;
-;; exec-again の動作
+;; exec-again の動l
 ;; * は時間待ち
 ;;
 ;; キー操作       123456789*            時間待ちしたところ
@@ -111,3 +126,48 @@
 ;; *old-history*         89 abcLLL      前の*new-history*をコピー
 ;; *new-history*            abcLLLdeL
 ;; *again-macro*                  de    引算+実行
+
+
+(defun key-repeated ()
+  (let* ((a (recent-keys))
+	 (b (copy-sequence a))
+	 (i 0)
+	 )
+    (while (< i (1- (length a)))
+      (aset b (1+ i) (aref a i))
+      (incf i)
+      )
+    (repeated b)
+    )
+  )
+
+(defun repeated (array)
+  (let (
+	(a (reverse array))
+	(alen (length array))
+	(i 1)
+	(replen 0)
+	)
+    (while (<= (* 2 i) alen)
+      (let ((matched t)
+	    (j 0)
+	    )
+	(while (and matched (< j i))
+	  (if (not (= (aref a j) (aref a (+ i j))))
+
+
+	      (setq matched nil))
+	  (incf j)
+	  )
+	(if matched (setq replen i))
+	)
+      (incf i)
+      )
+    replen
+    )
+  )
+
+;; (defconst *dmacro-key* "\C-l" "繰返し指定キー")
+
+
+
