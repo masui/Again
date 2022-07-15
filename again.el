@@ -133,6 +133,7 @@
 		(setq *old-history* *recent-history*)
 	      )
 	    (setq *again-macro* (chomp (get-postfix *old-history* recent)))
+	    (setq last-kbd-macro *again-macro*) ;; Ctrl-E で呼ばれるもの
 	    )
 	)
       (setq *recent-history* recent)
